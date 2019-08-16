@@ -33,6 +33,8 @@ namespace WPF_CaliburnMicro
                )
                .CreateLogger();
 
+         LogManager.GetLog = t => new CaliburnSerilogLog(t);
+
          Log.Information("Application starting...");
          DisplayRootViewFor<ShellViewModel>();
       }
