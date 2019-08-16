@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows;
 using Caliburn.Micro;
 using Serilog;
@@ -18,7 +19,7 @@ namespace WPF_CaliburnMicro
          object sender,
          StartupEventArgs e)
       {
-         if (Build.IsDebug)
+         if (Build.IsDebug && !Debugger.IsAttached)
             ConsoleWindow.Show();
 
          Log.Logger =
@@ -43,7 +44,7 @@ namespace WPF_CaliburnMicro
       {
          Log.Information("Application exiting...");
 
-         if (Build.IsDebug)
+         if (Build.IsDebug && !Debugger.IsAttached)
             ConsoleWindow.Close();
 
          base.OnExit(sender, e);
