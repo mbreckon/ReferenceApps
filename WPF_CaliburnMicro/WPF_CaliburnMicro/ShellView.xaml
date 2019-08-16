@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <StackPanel>
-        <TextBox x:Name="Name" />
+        <TextBox x:Name="NameOfSomething" />
         <Button x:Name="SayHello"
                 Content="Click Me" />
     </StackPanel>
