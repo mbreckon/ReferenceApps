@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Windows;
 using Caliburn.Micro;
 using Serilog;
@@ -19,12 +20,30 @@ namespace WPF_CaliburnMicro
          object sender,
          StartupEventArgs e)
       {
+         ConfigureLogging();
+         ConfigureErrorHandling();
+
+         Log.Information("Application starting...");
+
+         DisplayRootViewFor<ShellViewModel>();
+      }
+
+      protected override void OnExit(object sender, EventArgs e)
+      {
+         Log.Information("Application exiting...");
+
+         if (Build.IsDebug && !Debugger.IsAttached)
+            ConsoleWindow.Close();
+
+         base.OnExit(sender, e);
+      }
+
+      private void ConfigureLogging()
+      {
          if (Build.IsDebug && !Debugger.IsAttached)
             ConsoleWindow.Show();
 
-         new Bindings()
-            .OnError(x => Log.Error(x));
-
+         // Serilog setup
          Log.Logger =
             new LoggerConfiguration()
                .WriteTo.Console(
@@ -37,20 +56,21 @@ namespace WPF_CaliburnMicro
                )
                .CreateLogger();
 
-         LogManager.GetLog = t => new CaliburnSerilogLog(t);
+         // WPF Data Binding Errors
+         new Bindings()
+            .OnError(x => Log.Error(x));
 
-         Log.Information("Application starting...");
-         DisplayRootViewFor<ShellViewModel>();
+         // Caliburn Micro logs
+         LogManager.GetLog = t => new CaliburnSerilogLog(t);
       }
 
-      protected override void OnExit(object sender, EventArgs e)
+      private async void ConfigureErrorHandling()
       {
-         Log.Information("Application exiting...");
+         AppDomain.CurrentDomain.UnhandledException +=
+            (s, e) => new UnhandledError().Handle(e);
 
-         if (Build.IsDebug && !Debugger.IsAttached)
-            ConsoleWindow.Close();
-
-         base.OnExit(sender, e);
+         TaskScheduler.UnobservedTaskException +=
+            (s, e) => new UnhandledError().Handle(e);
       }
    }
 }
