@@ -22,6 +22,9 @@ namespace WPF_CaliburnMicro
          if (Build.IsDebug && !Debugger.IsAttached)
             ConsoleWindow.Show();
 
+         new Bindings()
+            .OnError(x => Log.Error(x));
+
          Log.Logger =
             new LoggerConfiguration()
                .WriteTo.Console(
