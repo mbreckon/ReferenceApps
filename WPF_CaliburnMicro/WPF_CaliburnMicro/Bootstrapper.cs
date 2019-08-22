@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 using Caliburn.Micro;
@@ -27,6 +29,13 @@ namespace WPF_CaliburnMicro
 
          DisplayRootViewFor<ShellViewModel>();
       }
+
+      protected override IEnumerable<Assembly> SelectAssemblies() =>
+         new List<Assembly>() {
+            Assembly.GetExecutingAssembly(),
+            Assembly.Load("WPF_CaliburnMicro.Views"),
+            Assembly.Load("WPF_CaliburnMicro.ViewModels")
+         };
 
       protected override void OnExit(object sender, EventArgs e)
       {
@@ -64,7 +73,7 @@ namespace WPF_CaliburnMicro
          LogManager.GetLog = t => new CaliburnSerilogLog(t);
       }
 
-      private async void ConfigureErrorHandling()
+      private void ConfigureErrorHandling()
       {
          AppDomain.CurrentDomain.UnhandledException +=
             (s, e) => new UnhandledError().Handle(e);

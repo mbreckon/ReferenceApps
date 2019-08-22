@@ -1,5 +1,4 @@
-﻿using System.Windows;
-using Caliburn.Micro;
+﻿using Caliburn.Micro;
 
 namespace WPF_CaliburnMicro
 {
@@ -25,7 +24,7 @@ namespace WPF_CaliburnMicro
 
       public void SayHello()
       {
-         MessageBox.Show(string.Format("Hello {0}!", Name)); //Don't do this in real life :)
+       //  MessageBox.Show(string.Format("Hello {0}!", Name)); //Don't do this in real life :)
       }
    }
 

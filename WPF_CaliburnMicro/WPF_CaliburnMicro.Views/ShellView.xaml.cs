@@ -10,7 +10,6 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace WPF_CaliburnMicro
@@ -18,7 +17,7 @@ namespace WPF_CaliburnMicro
    /// <summary>
    /// Interaction logic for ShellView.xaml
    /// </summary>
-   public partial class ShellView : UserControl
+   public partial class ShellView : Window
    {
       public ShellView()
       {
