@@ -4,8 +4,6 @@ namespace WPF_CaliburnMicro
 {
    public class ShellViewModel : PropertyChangedBase
    {
-      string name;
-
       public string Name
       {
          get { return name; }
@@ -26,6 +24,7 @@ namespace WPF_CaliburnMicro
       {
        //  MessageBox.Show(string.Format("Hello {0}!", Name)); //Don't do this in real life :)
       }
-   }
 
+      private string name;
+   }
 }
